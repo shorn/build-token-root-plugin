@@ -3,7 +3,7 @@ that allows me to get the HTTP content data when the URL is triggered by a POST 
 
 The added code is intended to allow me to access the data that Github and BitBucket send in the body.
 
-The change adds a StringParameterValue named "payload" whose content is straight from the request input stream.
+The change adds a StringParameterValue named `payload` whose content is straight from the request input stream.
 
 I hit the problem when I was trying to follow a [blog article](http://chloky.com/github-json-payload-in-jenkins/)
 about processing hooks in Jenkins, but it didn't seem to be working when used with the Build Token Root Plugin.
