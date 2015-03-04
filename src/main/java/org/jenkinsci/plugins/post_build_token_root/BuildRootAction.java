@@ -22,19 +22,13 @@
  * THE SOFTWARE.
  */
 
-package org.jenkinsci.plugins.build_token_root;
+package org.jenkinsci.plugins.post_build_token_root;
 
 import hudson.Extension;
-import hudson.model.AbstractProject;
-import hudson.model.Cause;
-import hudson.model.CauseAction;
-import hudson.model.ParameterDefinition;
-import hudson.model.ParameterValue;
-import hudson.model.ParametersAction;
-import hudson.model.ParametersDefinitionProperty;
-import hudson.model.UnprotectedRootAction;
+import hudson.model.*;
 import hudson.security.ACL;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +36,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
+
+import hudson.util.IOUtils;
 import jenkins.model.Jenkins;
 import org.acegisecurity.AccessDeniedException;
 import org.acegisecurity.context.SecurityContext;
@@ -57,7 +53,7 @@ public class BuildRootAction implements UnprotectedRootAction {
     private static final Logger LOGGER = Logger.getLogger(BuildRootAction.class.getName());
 
     @Override public String getUrlName() {
-        return "buildByToken";
+        return "buildByTokenPost";
     }
 
     @Override public String getIconFileName() {
@@ -95,6 +91,16 @@ public class BuildRootAction implements UnprotectedRootAction {
         		values.add(value);
         	}
         }
+        if( "POST".equalsIgnoreCase(req.getMethod()) ) {
+            InputStream postInStream = req.getInputStream();
+            if( postInStream != null ){
+                values.add( new StringParameterValue(
+                        "payload",
+                        IOUtils.toString(postInStream),
+                        "body content of HTTP POST request" ));
+            }
+        }
+
         Jenkins.getInstance().getQueue().schedule(p, p.getDelay(req), new ParametersAction(values), getBuildCause(req));
         ok(rsp);
     }

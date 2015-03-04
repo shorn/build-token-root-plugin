@@ -5,11 +5,13 @@
         <artifactId>plugin</artifactId>
         <version>1.480.3</version>
     </parent>
-    <artifactId>build-token-root</artifactId>
+    <artifactId>post-build-token-root</artifactId>
     <version>1.2-SNAPSHOT</version>
     <packaging>hpi</packaging>
-    <name>Build Authorization Token Root Plugin</name>
-    <description>Lets build and related REST build triggers be accessed even when anonymous users cannot see Jenkins.</description>
+    <name>Build Authorization Token Root Plugin with POST data</name>
+    <description>Lets build and related REST build triggers be accessed even when anonymous users cannot see Jenkins,
+        this fork of the original plugin allows access to POSTed data from the request (under the "payload"
+        parameter name).</description>
     <url>https://wiki.jenkins-ci.org/display/JENKINS/Build+Token+Root+Plugin</url>
     <licenses>
         <license>

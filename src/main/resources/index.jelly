@@ -1,3 +1,4 @@
 <div>
-  Lets <code>build</code> and related REST build triggers be accessed even when anonymous users cannot see Jenkins.
+  Lets <code>build</code> and related REST build triggers be accessed even when anonymous users cannot see Jenkins and
+  allows you to access the content of the request if it was a POST (under the "payload" parameter).
 </div>
